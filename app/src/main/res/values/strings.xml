@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BakeACake</string>
+    <string name="appbar_scrolling_view_behavior">View</string>
+
+    <string name="add_widget">Add widget</string>
+    <string name="appwidget_text">Select Recipe to show</string>
+</resources>
