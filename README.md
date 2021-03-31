@@ -7,6 +7,6 @@
 ## What i learned:
 - using **MediaPlayer/Exoplayer** to display videos.
 - Handling error cases in Android.
-- Adding a **widget to your app experience**
+- Adding a **widget** to my app experience
 - Leveraging a third-party library in my app.
 - Using Fragments to create a responsive design that works on phones and tablets.
