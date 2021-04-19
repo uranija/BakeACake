@@ -26,8 +26,18 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * An activity representing a list of Items. This activity
+ * has different presentations for handset and tablet-size devices. On
+ * handsets, the activity presents a list of items, which when touched,
+ * lead to a {@link RecipeStepActivity} representing
+ * item details. On tablets, the activity presents the list of items and
+ * item details side-by-side using two vertical panes.
+ */
+/** Implemented master-detail flow by following Android Studio's master-detail sample app tutorial
+ */
 public class RecipeDetailActivity extends AppCompatActivity {
-    private boolean mTwoPane;
+
     private RecyclerView recyclerView;
     private RecyclerView recyclerView2;
     public Recipe recipe;
@@ -39,15 +49,22 @@ public class RecipeDetailActivity extends AppCompatActivity {
     StepAdapter stepAdapter;
     List<Step> stepList;
     IngredientAdapter ingredientAdapter;
-    List<Ingredient>ingredientList;
+    List<Ingredient> ingredientList;
     private Context mContext;
     private boolean isTablet;
 
     ArrayList<Step> mStepArrayList;
     String mJsonResult;
     List<Ingredient> mIngredientList;
+    /**
+     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
+     * device.
+     */
     public boolean isTwoPane;
-    private RecipeDetailActivity mParentAvtivity;
+
+    private RecipeDetailActivity mParentActivity;
+    static ArrayList<String> ingredientsList = new ArrayList<>();
+    static ArrayList<String> measuresList = new ArrayList<>();
 
 
     @Override
@@ -59,13 +76,21 @@ public class RecipeDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Check if device is a tablet
-        if(findViewById(R.id.cooking_tablet) != null){
-            isTablet = true;
-        }
-        else{
-            isTablet = false;
-        }
+        // if(findViewById(R.id.cooking_tablet) != null){
+        //     isTablet = true;
+        // }
+        // else{
+        //     isTablet = false;
+        // }
 
+
+        if (findViewById(R.id.item_detail_container) != null) {
+            // The detail container view will be present only in the
+            // large-screen layouts (res/values-w900dp).
+            // If this view is present, then the
+            // activity should be in two-pane mode.
+            isTwoPane = true;
+        }
 
 
         recipeObjects = new ArrayList<Object>();
@@ -80,19 +105,12 @@ public class RecipeDetailActivity extends AppCompatActivity {
             recipeObjects.addAll(recipeIngredient);
             recipeObjects.addAll(recipeStep);
 
-            //Toast.makeText(this, recipeStep + " ", Toast.LENGTH_SHORT).show();
+
             setTitle(recipeName);
-            //UpdateIngService.startBakingService(mContext, recipeObjects);
 
         } else {
             Toast.makeText(this, "Data not available", Toast.LENGTH_SHORT).show();
         }
-
-
-
-
-
-
 
 
         initSteps();
@@ -102,13 +120,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-    private void initSteps(){
+    private void initSteps() {
         stepList = new ArrayList<>();
-        stepAdapter = new StepAdapter(this, stepList, mParentAvtivity, isTwoPane);
+        stepAdapter = new StepAdapter(this, stepList, mParentActivity, isTwoPane);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view2);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -141,13 +155,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 List<Step> recipes = response.body();
 
 
-
-
-
-
                 //displaying the string array into listview
 
-                recyclerView.setAdapter(new StepAdapter(getApplicationContext(), recipeStep, mParentAvtivity, isTwoPane));
+                recyclerView.setAdapter(new StepAdapter(getApplicationContext(), recipeStep, mParentActivity, isTwoPane));
 
             }
 
@@ -158,7 +168,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void initIngredient(){
+    private void initIngredient() {
         ingredientList = new ArrayList<>();
         ingredientAdapter = new IngredientAdapter(this, ingredientList);
 
@@ -192,10 +202,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 List<Ingredient> recipes = response.body();
 
 
-
-
-
-
                 //displaying the string array into listview
 
                 recyclerView2.setAdapter(new IngredientAdapter(getApplicationContext(), recipeIngredient));
@@ -208,10 +214,4 @@ public class RecipeDetailActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-
-
-
 }

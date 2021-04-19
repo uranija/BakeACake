@@ -34,14 +34,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.android.bakingapp.ui.RecipeDetailActivity" />
         </activity>
-        <service android:name="com.example.android.bakingapp.widget.UpdateIngService" />
+        <service android:name="com.example.android.bakingapp.widget.UpdateBakeService" />
 
         <service
-            android:name="com.example.android.bakingapp.widget.IngWidgetService"
+            android:name="com.example.android.bakingapp.widget.BakeWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <receiver
-            android:name="com.example.android.bakingapp.widget.IngWidgetProvider"
+            android:name="com.example.android.bakingapp.widget.BakeWidgetProvider"
             android:icon="@drawable/brownie">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -50,7 +50,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/baking_widget_provider_info" />
+                android:resource="@xml/baking_widget_info" />
         </receiver>
 
 

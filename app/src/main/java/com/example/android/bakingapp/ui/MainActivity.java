@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
     }
 
     private void getRecipes() {
@@ -70,10 +69,6 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
 
                 List<Recipe> recipes = response.body();
-
-
-
-
 
 
                 //displaying the string array into listview

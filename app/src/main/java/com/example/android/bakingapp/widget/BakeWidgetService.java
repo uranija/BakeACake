@@ -9,13 +9,11 @@ import com.example.android.bakingapp.R;
 
 import java.util.ArrayList;
 
-import static com.example.android.bakingapp.widget.IngWidgetProvider.ingredientsList;
-import static com.example.android.bakingapp.widget.IngWidgetProvider.measuresList;
+import static com.example.android.bakingapp.widget.BakeWidgetProvider.ingredientsList;
 
-public class IngWidgetService extends RemoteViewsService {
+public class BakeWidgetService extends RemoteViewsService {
 
-    ArrayList<String> remoteViewingredientsList;
-    ArrayList<String> remoteViewMeasuresList;
+    ArrayList<String> remoteIngredientList;
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
@@ -36,10 +34,11 @@ public class IngWidgetService extends RemoteViewsService {
         public void onCreate() {
         }
 
+        //called on start and when notifyAppWidgetViewDataChanged is called
         @Override
         public void onDataSetChanged() {
-            remoteViewingredientsList = ingredientsList;
-            remoteViewMeasuresList = measuresList;
+            remoteIngredientList = ingredientsList;
+
         }
 
         @Override
@@ -50,21 +49,23 @@ public class IngWidgetService extends RemoteViewsService {
         @Override
         public int getCount() {
 
-            return remoteViewingredientsList.size();
+            return remoteIngredientList.size();
         }
 
+        /**
+         * This method acts like the onBindViewHolder method in an Adapter
+         *
+         * @param position The current position of the item in the ListView to be displayed
+         * @return The RemoteViews object to display for the provided postion
+         */
         @Override
         public RemoteViews getViewAt(int position) {
 
             RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_view_item);
 
-            views.setTextViewText(R.id.widget_list_view_ingredient_item, remoteViewingredientsList.get(position));
-
-           // views.setTextViewText(R.id.widget_list_view_measure_item, remoteViewMeasuresList.get(position));
-
-
+            views.setTextViewText(R.id.widget_list_view_item, remoteIngredientList.get(position));
             Intent fillInIntent = new Intent();
-            views.setOnClickFillInIntent(R.id.widget_list_view_ingredient_item, fillInIntent);
+            views.setOnClickFillInIntent(R.id.widget_list_view_item, fillInIntent);
 
             return views;
         }

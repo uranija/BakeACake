@@ -1,17 +1,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:background="@drawable/brownie"
-
     android:textAlignment="viewStart"
     android:gravity="start">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-
         android:contentDescription="@string/appwidget_text"
         android:text="@string/appwidget_text"
         android:textColor="#ffffff"

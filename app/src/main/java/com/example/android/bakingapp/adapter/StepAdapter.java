@@ -8,14 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.bakingapp.R;
+import com.example.android.bakingapp.model.Step;
 import com.example.android.bakingapp.ui.RecipeDetailActivity;
 import com.example.android.bakingapp.ui.RecipeStepActivity;
 import com.example.android.bakingapp.ui.RecipeStepFragment;
-import com.example.android.bakingapp.model.Step;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,25 +23,23 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
 
     Context mCtx;
     List<Step> stepList;
-    public ArrayList<Object> bakingObjects;
-    private boolean mTwoPane;
+    public ArrayList<Object> recipeObjects;
     public boolean isTwoPane;
-    private final RecipeDetailActivity mParentActivity ;
+    private final RecipeDetailActivity mParentActivity;
 
-    public StepAdapter(Context mCtx,  List<Step> stepList, RecipeDetailActivity mParentActivity, boolean isTwoPane) {
+    public StepAdapter(Context mCtx, List<Step> stepList, RecipeDetailActivity mParentActivity, boolean isTwoPane) {
         this.mCtx = mCtx;
         this.stepList = stepList;
-        this.mParentActivity=mParentActivity;
-        this.isTwoPane=isTwoPane;
+        this.mParentActivity = mParentActivity;
+        this.isTwoPane = isTwoPane;
 
     }
-
 
 
     @NonNull
     @Override
     public StepAdapter.StepViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mCtx).inflate(R.layout.steps_layout, parent, false);
+        View view = LayoutInflater.from(mCtx).inflate(R.layout.steps_card, parent, false);
         return new StepAdapter.StepViewHolder(view);
     }
 
@@ -64,13 +61,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
     class StepViewHolder extends RecyclerView.ViewHolder {
         public TextView shortDesc, desc, videoUrl;
         public boolean isTwoPane;
-        ImageView imageView;
-        TextView textView;
-        TextView textView2;
         public int id;
-        public String image;
-        //recipe name
-        private String name;
 
 
         public StepViewHolder(View itemView) {
@@ -89,7 +80,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION) {
                         if (isTwoPane) {
-                            Step clickedDataItem = (Step)stepList.get(pos);
+                            Step clickedDataItem = (Step) stepList.get(pos);
                             Bundle arguments = new Bundle();
                             arguments.putParcelable("Steps", clickedDataItem);
                             RecipeStepFragment fragment = new RecipeStepFragment();
@@ -117,18 +108,8 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
             });
 
 
-
         }
 
 
     }
 }
-
-
-
-
-
-
-
-
-

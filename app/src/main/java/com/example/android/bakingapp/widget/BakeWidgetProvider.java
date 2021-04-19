@@ -7,27 +7,27 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
-
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.ui.RecipeDetailActivity;
 
 import java.util.ArrayList;
 
-import static com.example.android.bakingapp.widget.UpdateIngService.INGREDIENTS_LIST;
-import static com.example.android.bakingapp.widget.UpdateIngService.MEASURES_LIST;
+import static com.example.android.bakingapp.widget.UpdateBakeService.INGREDIENTS_LIST;
 
-public class IngWidgetProvider extends AppWidgetProvider {
+// Checked this guide for how to implement widgets "https://github.com/Bahaaib/BakingApp/blob/master/app/src/main/java/com/example/bahaa/bakingapp/Widgets/UpdateIngService.java"
+
+public class BakeWidgetProvider extends AppWidgetProvider {
 
     static ArrayList<String> ingredientsList = new ArrayList<>();
-    static ArrayList<String> measuresList = new ArrayList<>();
+
 
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
 
         // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.ing_widget);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_list_view);
 
-        //call activity when widget is clicked, but resume activity from stack so you do not pass intent.extras afresh
+
         Intent appIntent = new Intent(context, RecipeDetailActivity.class);
         appIntent.addCategory(Intent.ACTION_MAIN);
         appIntent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -35,19 +35,29 @@ public class IngWidgetProvider extends AppWidgetProvider {
         PendingIntent appPendingIntent = PendingIntent.getActivity(context, 0, appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setPendingIntentTemplate(R.id.widget_list_view, appPendingIntent);
 
-        // Set the IngWidgetService intent to act as the adapter for the GridView
-        Intent intent = new Intent(context, IngWidgetService.class);
+
+        Intent intent = new Intent(context, BakeWidgetService.class);
         views.setRemoteAdapter(R.id.widget_list_view, intent);
 
-        // Instruct the widget manager to update the widget
+
         appWidgetManager.updateAppWidget(appWidgetId, views);
 
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        //Start the intent service update widget action, the service takes care of updating the widgets UI
 
     }
+
+    /**
+     * Updates all widget instances given the widget Ids and display information
+     *
+     * @param context          The calling context
+     * @param appWidgetManager The widget manager
+     * @param appWidgetIds     Array of widget Ids to be updated
+     */
+
 
     public static void updateBakingWidgets(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
@@ -57,28 +67,27 @@ public class IngWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onEnabled(Context context) {
-        // Enter relevant functionality for when the first widget is created
+        // Perform any action when an AppWidget for this provider is instantiated
     }
 
     @Override
     public void onDisabled(Context context) {
-        // Enter relevant functionality for when the last widget is disabled
+        // Perform any action when the last AppWidget instance for this provider is deleted
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, IngWidgetProvider.class));
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, BakeWidgetProvider.class));
 
         final String action = intent.getAction();
 
         if (action.equals("android.appwidget.action.APPWIDGET_UPDATE2")) {
             ingredientsList = intent.getExtras().getStringArrayList(INGREDIENTS_LIST);
-            measuresList = intent.getExtras().getStringArrayList(MEASURES_LIST);
 
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list_view);
             //Now update all widgets
-            IngWidgetProvider.updateBakingWidgets(context, appWidgetManager, appWidgetIds);
+            BakeWidgetProvider.updateBakingWidgets(context, appWidgetManager, appWidgetIds);
             super.onReceive(context, intent);
         }
     }

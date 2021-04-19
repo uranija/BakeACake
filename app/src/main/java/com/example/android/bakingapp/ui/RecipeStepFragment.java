@@ -40,6 +40,16 @@ import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.video.VideoRendererEventListener;
 
 import static android.content.ContentValues.TAG;
+/**
+ * A fragment representing a single Item detail screen.
+ * This fragment is either contained in a {@link RecipeDetailActivity}
+ * in two-pane mode (on tablets) or a {@link RecipeStepActivity}
+ * on handsets.
+ */
+
+/** Checked this guide for implementing exoplayer in my app "https://codelabs.developers.google.com/codelabs/exoplayer-intro/#5"
+ *  and this one too "https://www.youtube.com/watch?v=fO15z4gVgJs"
+ */
 
 @SuppressLint("ValidFragment")
 public class RecipeStepFragment extends Fragment {
@@ -60,7 +70,10 @@ public class RecipeStepFragment extends Fragment {
     String videoUrl;
     Step step;
 
-
+    /**
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
+     */
     public RecipeStepFragment() {
 
     }
@@ -216,10 +229,6 @@ public class RecipeStepFragment extends Fragment {
             AudioRendererEventListener {
 
 
-
-
-
-
         @Override
         public void onTimelineChanged(Timeline timeline, Object manifest) {
 
@@ -247,14 +256,10 @@ public class RecipeStepFragment extends Fragment {
         }
 
 
-
-
-
         @Override
         public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
 
         }
-
 
 
         @Override
@@ -276,8 +281,6 @@ public class RecipeStepFragment extends Fragment {
         public void onAudioInputFormatChanged(com.google.android.exoplayer2.Format format) {
 
         }
-
-
 
 
         @Override
@@ -304,7 +307,6 @@ public class RecipeStepFragment extends Fragment {
         public void onVideoInputFormatChanged(com.google.android.exoplayer2.Format format) {
 
         }
-
 
 
         @Override
@@ -359,13 +361,6 @@ public class RecipeStepFragment extends Fragment {
         }
 
 
-
-
     }
 
-
 }
-
-
-
-

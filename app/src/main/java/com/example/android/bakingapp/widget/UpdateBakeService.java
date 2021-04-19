@@ -6,16 +6,16 @@ import android.content.Intent;
 
 import java.util.ArrayList;
 
-public class UpdateIngService extends IntentService {
+public class UpdateBakeService extends IntentService {
     public static String INGREDIENTS_LIST = "INGREDIENTS_LIST";
     public static String MEASURES_LIST = "MEASURES_LIST";
 
-    public UpdateIngService() {
-        super("UpdateIngService");
+    public UpdateBakeService() {
+        super("UpdateBakeService");
     }
 
     public static void startBakingService(Context context, ArrayList<String> ingredientsList) {
-        Intent intent = new Intent(context, UpdateIngService.class);
+        Intent intent = new Intent(context, UpdateBakeService.class);
         intent.putExtra(INGREDIENTS_LIST, ingredientsList);
 
         context.startService(intent);

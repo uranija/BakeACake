@@ -19,6 +19,7 @@
     -->
 
 
+
     <FrameLayout
         android:id="@+id/item_detail_container"
         android:layout_width="0dp"

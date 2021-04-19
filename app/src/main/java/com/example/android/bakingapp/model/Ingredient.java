@@ -10,7 +10,7 @@ public class Ingredient implements Parcelable {
 
 
     @SerializedName("quantity")
-     @Expose
+    @Expose
     private double quantity;
 
     @SerializedName("measure")
@@ -35,11 +35,9 @@ public class Ingredient implements Parcelable {
     }
 
 
-
     public String getMeasure() {
         return measure;
     }
-
 
 
     public String getIngredient() {

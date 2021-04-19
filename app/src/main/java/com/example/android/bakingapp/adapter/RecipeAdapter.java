@@ -13,35 +13,16 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.android.bakingapp.R;
-import com.example.android.bakingapp.ui.RecipeDetailActivity;
-import com.example.android.bakingapp.model.Ingredient;
 import com.example.android.bakingapp.model.Recipe;
-import com.example.android.bakingapp.model.Step;
-import com.example.android.bakingapp.widget.UpdateIngService;
+import com.example.android.bakingapp.ui.RecipeDetailActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>{
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
     Context mCtx;
     List<Recipe> recipeList;
-    public static final String ID = "id";
-    public static final String NAME = "name";
-    public static final String INGREDIENTS = "ingredients";
-    public static final String INGREDIENTS_BUNDLE = "ingredientsBundle";
-    public static final String STEPS = "steps";
-    public static final String STEPS_BUNDLE = "stepsBundle";
-    public static final String SERVINGS = "servings";
-    private String mJsonResult;
-    String recipeJson;
-    private ArrayList<String> ingStrArray, measureStrArray;
 
-    {
-        recipeList = new ArrayList<>();
-        ingStrArray = new ArrayList<>();
-        measureStrArray = new ArrayList<>();
-    }
 
     public RecipeAdapter(Context mCtx, List<Recipe> recipeList) {
         this.mCtx = mCtx;
@@ -51,7 +32,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     @NonNull
     @Override
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mCtx).inflate(R.layout.recyclerview_layout, parent, false);
+        View view = LayoutInflater.from(mCtx).inflate(R.layout.recipe_card, parent, false);
         return new RecipeViewHolder(view);
     }
 
@@ -60,17 +41,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         Recipe recipe = recipeList.get(position);
 
         String imageUrl = recipe.getImage();
-        holder.id= Integer.parseInt(String.valueOf(recipe.getId()));
+        holder.id = Integer.parseInt(String.valueOf(recipe.getId()));
         holder.textView.setText(recipe.getName());
-        holder.textView2.setText(recipe.getServings());
-        holder.mSteps=(recipe.getSteps());
-        holder.mIngredients=(recipe.getIngredients());
+
 
         //The Json that we query has 4 recipes,we will use a different photo for each recipe
-        if (imageUrl != null && imageUrl.isEmpty())
-        {
-            switch (holder.id)
-            {
+        if (imageUrl != null && imageUrl.isEmpty()) {
+            switch (holder.id) {
                 //Nutella Pie
                 case 1:
                     Glide.with(mCtx).load(R.drawable.nutella).into(holder.imageView);
@@ -88,16 +65,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                     Glide.with(mCtx).load(R.drawable.cheesecake).into(holder.imageView);
                     break;
             }
-        } else
-        {
+        } else {
             Glide.with(mCtx).load(imageUrl).into(holder.imageView);
         }
-
-
-        ingStrArray.add(String.valueOf(recipeList.get(position).getIngredients()));
-
-
-        UpdateIngService.startBakingService(mCtx, ingStrArray);
 
 
     }
@@ -110,29 +80,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     class RecipeViewHolder extends RecyclerView.ViewHolder {
 
 
-
         ImageView imageView;
         TextView textView;
-        TextView textView2;
-        TextView textView3;
         public int id;
-        public String image;
-        //recipe name
-        private String name;
-        private int servings;
-        public List<Step> mSteps;
-        public List<Recipe> recipe;
-        private List<Ingredient> mIngredients;
-
 
 
         public RecipeViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.recipe_item);
-
             textView = itemView.findViewById(R.id.textView);
-            textView2 = itemView.findViewById(R.id.textView2);
-            textView3 = itemView.findViewById(R.id.textView3);
 
             imageView.setOnClickListener(new View.OnClickListener() {
 
@@ -142,15 +98,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION) {
                         Recipe recipe = recipeList.get(pos);
-
                         Intent intent = new Intent(mCtx, RecipeDetailActivity.class);
                         intent.putExtra("Recipe", recipe);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        mCtx.startActivity(intent);
-
-
-
-
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mCtx.startActivity(intent);
                         Toast.makeText(v.getContext(), "You clicked" + recipe.getName(), Toast.LENGTH_SHORT).show();
@@ -165,13 +114,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         }
 
 
-
-
-
-
     }
-
-
 
 
 }

@@ -15,7 +15,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RecipeViewModel extends ViewModel{
+public class RecipeViewModel extends ViewModel {
     //this is the data that we will fetch asynchronously
     private MutableLiveData<List<Recipe>> recipeList;
 
